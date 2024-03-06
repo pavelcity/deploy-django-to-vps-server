@@ -68,7 +68,7 @@ sudo service nginx status
 
 
 ## Настройка nginx.	Добавить файл в nginx каталог 
-### (myproject_django - придумайте свой вариант)
+(myproject_django - придумайте свой вариант)
 ```
 sudo nano /etc/nginx/sites-available/myproject_django
 ```
@@ -118,7 +118,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Запуск сервера (временная мера - просто для проверки). Ниже настроим gunicorn
+## Запуск сервера 
+(временная мера - просто для проверки). Ниже настроим gunicorn
 ```
 python manage.py runserver 0.0.0.0:8000
 ```
@@ -132,7 +133,7 @@ python manage.py collectstatic
 
 ## #Letsencrypt
 
-### Подключение сертификата
+Подключение сертификата
 ```
 sudo apt install certbot python3-certbot-nginx
 ```
@@ -182,14 +183,134 @@ sudo certbot --nginx
 ---
 
 
-## Commands
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Настройка Gunicorn
+```
+sudo service gunicorn restart
+```
 
+* `в виртуальном окружении выполнить команду`
+```
+pip install gunicorn
+```
+
+
+Убедитесь, что вы создали соответствующий systemd юнитный файл для gunicorn. Обычно юнитный файл для gunicorn должен быть создан в директории 
+```
+/etc/systemd/system/
+```
+
+создать файл сокета gunicorn
+```
+sudo nano /etc/systemd/system/gunicorn.socket
+```
+
+Наполнить этими данными
+
+```
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+```
+
+создать файл для службы
+```
+sudo nano /etc/systemd/system/gunicorn.service
+```
+
+рабочий вариант (myproject_django - замените на свою папку проекта)
+
+```
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/var/www/myproject_django/
+ExecStart=/var/www/myproject_django/venv/bin/gunicorn \
+    --access-logfile - \
+    --workers 3 \
+    --bind unix:/run/gunicorn.sock \
+    base.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+```
+
+вводим эти команды
+```
+sudo systemctl daemon-reload
+```
 ```
 sudo systemctl restart gunicorn
 ```
 
+
+
+### Активировать сокет
+```
+sudo systemctl start gunicorn.socket
+```
+```
+sudo systemctl enable gunicorn.socket
+```
+
+другие полезные команды
+```
+sudo service gunicorn start
+```
+```
+sudo service gunicorn status
+```
+```
+sudo systemctl daemon-reload
+```
+```
+sudo systemctl restart gunicorn
+```
+
+```
+sudo systemctl daemon-reload
+```
+
+```
+sudo systemctl status gunicorn
+```
+```
+sudo systemctl restart nginx
+```
+
+
+
+
+
+
+
+---
+
+
+
+## Commands
+
+* `python manage.py clear_cache` - Чтобы очистить кеш в Django, вы можете использовать команду управления clear_cache. Для этого выполните следующую команду в вашем терминале:
+```
+python manage.py clear_cache
+```
+
+```
+sudo systemctl restart nginx
+```
+```
+sudo systemctl restart gunicorn
+```
+```
+python manage.py collectstatic
+```
