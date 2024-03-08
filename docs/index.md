@@ -36,10 +36,10 @@
 
 * `настроить ресурсные записи в regru` - Позовлит соединить доменное имя с купленным сервером
 
-заходим в регру, выбираем доменное имя, изменить ресурсные записи, добавляем ip нашего сервера 
+заходим в регру, выбираем доменное имя, изменить ресурсные записи, добавляем ip нашего сервера: 
 
 * `в запись @` 
-* `и www`
+* `и в www`
 ![server](assets/img/resursdata.png)
 
 
@@ -224,11 +224,30 @@ sudo nginx -t
 
 ## #Django
 ### Ставим нужные пакеты
+* `sudo apt install gcc (python-dev) python3-pip python3-dev curl -y`
+
 ```
-sudo apt install gcc python-dev python3-pip python3-dev curl -y
+sudo apt install gcc 
 ```
 ```
-sudo apt install python-dev-is-python3
+??? sudo apt install python-dev-is-python3
+```
+```
+sudo apt install python3
+```
+```
+sudo apt install python3-pip
+```
+```
+sudo apt install python3-dev
+```
+```
+sudo apt install curl
+```
+
+Проверьте успешность установки с помощью 
+```
+python3 --version
 ```
 
 
