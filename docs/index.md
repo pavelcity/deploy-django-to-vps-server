@@ -442,21 +442,12 @@ systemctl daemon-reload
 sudo service gunicorn restart
 ```
 
-
-
-
-
-
-вводим эти команды
 ```
 sudo systemctl daemon-reload
 ```
 ```
 sudo systemctl restart gunicorn
 ```
-
-
-
 
 
 другие полезные команды
@@ -492,8 +483,21 @@ sudo systemctl restart gunicorn
 sudo apt install certbot python3-certbot-nginx
 ```
 ```
-sudo certbot --nginx
+sudo certbot
 ```
+
+!!! note "выпуск ssl"
+    1. вводим свой емейл
+    2. `y` - соглашаемся с инструкцией
+    3. `выпустить ssl сертификат` - по настройке nginx будет преложено выпостить ssl для домена с www  и без www
+    4. `1 2` - вводим цифры через пробел
+
+### на этом этапе выпуск сертификата ssl для проекта на django завершен
+
+---
+
+
+
 
 
 
@@ -504,6 +508,9 @@ sudo certbot --nginx
 
 * `Install snapd`
 * `https://snapcraft.io/docs/installing-snapd`
+```
+sudo certbot --nginx
+```
 
 ```
 snap --version
