@@ -172,13 +172,42 @@ sudo chmod o+w /var/www/
 sudo nano /etc/nginx/sites-available/myproject_django
 ```
 
-## Создаем симлинк
+### добавляем в файл /etc/nginx/sites-available/myproject_django эти данные (ставим свой ip в строку server_name)
+``` linenums="1"
+server {
+	
+	server_name 00.000.000.000;
+	
+	location /static/ {
+		root '/var/www/myproject_django/';
+	}
+	
+	location /media/ {
+		root '/var/www/myproject_django/';
+	}
+	
+	location / {
+		include proxy_params;
+		proxy_pass http://unix:/run/gunicorn.sock;
+	}
+}
+```
+
+### Создаем симлинк
 ```
 sudo ln -s /etc/nginx/sites-available/myproject_django /etc/nginx/sites-enabled
 ```
 
+### проверим конфигурацию nginx
+```
+sudo nginx -t
+```
 
-## Ставим нужные пакеты
+---
+
+
+## #Django
+### Ставим нужные пакеты
 ```
 sudo apt install gcc python-dev python3-pip python3-dev curl -y
 ```
@@ -187,7 +216,7 @@ sudo apt install python-dev-is-python3
 ```
 
 
-## Установка виртуальной среды Python
+### Установка виртуальной среды Python
 ```
 sudo -H pip3 install --upgrade pip
 ```
@@ -198,7 +227,7 @@ pip install --upgrade pip
 sudo -H pip3 install virtualenv
 ```
 
-## Создайте виртуальную среду в этой директории
+### Создайте виртуальную среду в этой директории
 ```
 virtualenv venv
 ```
@@ -207,7 +236,7 @@ python3 -m venv venv
 ```
 
 
-## Активируйте виртуальную среду
+### Активируйте виртуальную среду
 ```
 source venv/bin/activate
 ```
