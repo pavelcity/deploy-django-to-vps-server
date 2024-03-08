@@ -287,12 +287,12 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-## Установка модулей или пакетов вашего django приложения
+### Установка модулей или пакетов вашего django приложения
 ```
 pip install -r requirements.txt
 ```
 
-## Запуск сервера 
+### Запуск сервера 
 (временная мера - просто для проверки). Ниже настроим gunicorn
 ```
 python manage.py runserver 0.0.0.0:8000
@@ -302,18 +302,187 @@ python3 manage.py runserver 0.0.0.0:8000
 ```
 скорее всего сайт откроется с ошбикой, нужно внести тестовые доступы в settings.py в блок ALLOWED_HOSTS
 ![settingspy](assets/img/settings.png)
+![hosts](assets/img/hosts.png)
 
 
-## Cобираем статические файлы
+### Создать папку static 
+```
+mkdir static
+```
+
+
+### Cобираем статические файлы
 ```
 python manage.py collectstatic
+```
+```
+python3 manage.py collectstatic
 ```
 
 ---
 
-## #Letsencrypt
 
-Подключение сертификата
+
+
+
+## #Настройка Gunicorn
+
+### в виртуальном окружении выполнить команду (venv)
+```
+pip install gunicorn
+```
+![terminal](assets/img/venv.jpg)
+
+
+### создать файл сокета gunicorn
+```
+sudo nano /etc/systemd/system/gunicorn.socket
+```
+```
+sudo mcedit /etc/systemd/system/gunicorn.socket
+```
+
+
+### Наполнить этими данными
+
+```
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+```
+
+
+
+### создать файл для службы
+```
+sudo nano /etc/systemd/system/gunicorn.service
+```
+```
+sudo mcedit /etc/systemd/system/gunicorn.service
+```
+
+* `рабочий вариант` (myproject_django - замените на свою папку проекта)
+
+!!! Важно
+    1. В блоке [Service] заменить в строках User и Group свои значения
+    2. Поставить пользователя и группу от которого будет запускаться сервис
+    3. В нашем случае
+    4. User=coder
+    5. Group=coder
+    6. Как узнать текущего пользователя и его группы?
+    7. ``` whoami ``` - пользователь
+    8. Другие команды:
+    9. ```cat /etc/passwd```  - информация об учетных записях пользователей
+    10. ```cat /etc/group``` - группы
+
+
+
+
+```
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/var/www/myproject_django/
+ExecStart=/var/www/myproject_django/venv/bin/gunicorn \
+    --access-logfile - \
+    --workers 3 \
+    --bind unix:/run/gunicorn.sock \
+    base.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+```
+
+
+### Активировать сокет
+```
+sudo systemctl start gunicorn.socket
+```
+```
+sudo systemctl enable gunicorn.socket
+```
+
+### Активируем службу gunicorn
+```
+sudo service gunicorn start
+```
+
+### Узнаем статус службы
+```
+sudo service gunicorn status
+```
+
+---
+
+
+* `другое`
+```
+sudo service gunicorn restart
+```
+
+
+
+
+Убедитесь, что вы создали соответствующий systemd юнитный файл для gunicorn. Обычно юнитный файл для gunicorn должен быть создан в директории 
+```
+/etc/systemd/system/
+```
+
+
+
+
+
+вводим эти команды
+```
+sudo systemctl daemon-reload
+```
+```
+sudo systemctl restart gunicorn
+```
+
+
+
+
+
+другие полезные команды
+
+
+```
+sudo systemctl daemon-reload
+```
+
+
+```
+sudo systemctl daemon-reload
+```
+
+```
+sudo systemctl status gunicorn
+```
+```
+sudo systemctl restart nginx
+```
+```
+sudo systemctl restart gunicorn
+```
+
+
+
+----
+
+## #Letsencrypt - ssl
+
+Подключение сертификата ssl
 ```
 sudo apt install certbot python3-certbot-nginx
 ```
@@ -358,117 +527,6 @@ sudo certbot --nginx
 * ` - вводим емейл`
 * `- y (соглашаемся)`
 * `- вводим наш домен (example.com) - пишите свой домен`
-
-
----
-
-
-
-## Настройка Gunicorn
-```
-sudo service gunicorn restart
-```
-
-* `в виртуальном окружении выполнить команду`
-```
-pip install gunicorn
-```
-
-
-Убедитесь, что вы создали соответствующий systemd юнитный файл для gunicorn. Обычно юнитный файл для gunicorn должен быть создан в директории 
-```
-/etc/systemd/system/
-```
-
-создать файл сокета gunicorn
-```
-sudo nano /etc/systemd/system/gunicorn.socket
-```
-
-Наполнить этими данными
-
-```
-[Unit]
-Description=gunicorn socket
-
-[Socket]
-ListenStream=/run/gunicorn.sock
-
-[Install]
-WantedBy=sockets.target
-```
-
-создать файл для службы
-```
-sudo nano /etc/systemd/system/gunicorn.service
-```
-
-рабочий вариант (myproject_django - замените на свою папку проекта)
-
-```
-[Unit]
-Description=gunicorn daemon
-Requires=gunicorn.socket
-After=network.target
-
-[Service]
-User=root
-Group=root
-WorkingDirectory=/var/www/myproject_django/
-ExecStart=/var/www/myproject_django/venv/bin/gunicorn \
-    --access-logfile - \
-    --workers 3 \
-    --bind unix:/run/gunicorn.sock \
-    base.wsgi:application
-
-[Install]
-WantedBy=multi-user.target
-```
-
-вводим эти команды
-```
-sudo systemctl daemon-reload
-```
-```
-sudo systemctl restart gunicorn
-```
-
-
-
-### Активировать сокет
-```
-sudo systemctl start gunicorn.socket
-```
-```
-sudo systemctl enable gunicorn.socket
-```
-
-другие полезные команды
-```
-sudo service gunicorn start
-```
-```
-sudo service gunicorn status
-```
-```
-sudo systemctl daemon-reload
-```
-```
-sudo systemctl restart gunicorn
-```
-
-```
-sudo systemctl daemon-reload
-```
-
-```
-sudo systemctl status gunicorn
-```
-```
-sudo systemctl restart nginx
-```
-
-
 
 
 
