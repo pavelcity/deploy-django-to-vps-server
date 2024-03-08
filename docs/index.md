@@ -269,6 +269,7 @@ sudo -H pip3 install virtualenv
     === "папка вашего проекта"
         1. Убедиться что находимся в папке проекта, например по этому пути  /var/www/django_project
         2. Следующие действия необходимо выполнять в папке вашего проекта
+        3. удалить папку venv 
 
 если папка venv не была добавлена в gitignore вполне возможно что она уже будет после клонирования репозитория
 ```
@@ -333,6 +334,11 @@ pip install gunicorn
 ```
 ![terminal](assets/img/venv.jpg)
 
+
+### Проверить установился ли gunicorn
+```
+gunicorn --version
+```
 
 ### создать файл сокета gunicorn
 ```
@@ -422,6 +428,12 @@ sudo service gunicorn start
 sudo service gunicorn status
 ```
 
+
+### Внеся изменения в файлы делаем перезагрузку
+```
+systemctl daemon-reload
+```
+
 ---
 
 
@@ -430,13 +442,6 @@ sudo service gunicorn status
 sudo service gunicorn restart
 ```
 
-
-
-
-Убедитесь, что вы создали соответствующий systemd юнитный файл для gunicorn. Обычно юнитный файл для gunicorn должен быть создан в директории 
-```
-/etc/systemd/system/
-```
 
 
 
