@@ -125,6 +125,12 @@ git --version
 sudo apt install git
 ```
 
+### MCeditor
+Midnight Commander — один из файловых менеджеров с текстовым интерфейсом типа Norton Commander для UNIX-подобных операционных
+```
+sudo apt install mc
+```
+
 ### Установите Nginx
     sudo apt install nginx
 
@@ -152,6 +158,31 @@ sudo service nginx reload
 ```
 sudo service nginx status
 ```
+
+---
+
+
+### проблема с клонированием / Permission denied
+* `Ошибка "Permission denied" при клонировании репозитория Git может возникнуть из-за недостаточных прав доступа к директории, в которую вы пытаетесь склонировать проект. В данном случае, вам не хватает прав на запись в директорию, где вы пытаетесь выполнить клонирование.`
+* `Для решения этой проблемы вам следует убедиться, что у вас есть достаточные права доступа к директории /var/www/ или создать новую директорию, куда вы сможете клонировать проект. Вы можете выполнить следующие шаги:`
+
+Убедитесь, что у вас есть права на запись в директорию /var/www/. Для этого выполните команду:
+```
+ls -ld /var/www/
+
+```
+
+Если у вас нет прав на запись в эту директорию, выполните команду для изменения прав доступа:
+```
+sudo chmod o+w /var/www/
+```
+
+### Убедитесь, что пользователь coder имеет права на запись в директорию /var/www/
+Вы можете изменить права доступа с помощью команды
+```
+sudo chown -R coder:coder /var/www/
+```
+
 
 ---
 ## Склонировать проект 
@@ -214,6 +245,14 @@ server {
 sudo ln -s /etc/nginx/sites-available/myproject_django /etc/nginx/sites-enabled
 ```
 
+### Перегрузите nginx
+```
+sudo systemctl restart nginx
+```
+```
+sudo service nginx restart
+```
+
 ### проверим конфигурацию nginx
 ```
 sudo nginx -t
@@ -256,7 +295,7 @@ python3 --version
 sudo -H pip3 install --upgrade pip
 ```
 ```
-pip install --upgrade pip
+sudo pip install --upgrade pip
 ```
 ```
 sudo -H pip3 install virtualenv
@@ -275,7 +314,10 @@ sudo -H pip3 install virtualenv
 ```
 virtualenv venv
 ```
-
+### устновим пакет
+```
+sudo apt install python3.10-venv
+```
 ```
 python3 -m venv venv
 ```
@@ -396,8 +438,8 @@ Requires=gunicorn.socket
 After=network.target
 
 [Service]
-User=root
-Group=root
+User=coder
+Group=coder
 WorkingDirectory=/var/www/myproject_django/
 ExecStart=/var/www/myproject_django/venv/bin/gunicorn \
     --access-logfile - \
@@ -497,7 +539,7 @@ sudo certbot
 ---
 
 
-
+---
 
 
 
