@@ -213,63 +213,16 @@ sudo chmod o+w /var/www/
 
 ----
 
-## Настройка nginx.	Добавить файл в nginx каталог 
-(myproject_django - придумайте свой вариант)
-```
-sudo nano /etc/nginx/sites-available/myproject_django
-```
 
-### добавляем в файл /etc/nginx/sites-available/myproject_django эти данные (ставим свой ip в строку server_name)
-``` linenums="1"
-server {
-	
-	server_name 00.000.000.000;
-	
-	location /static/ {
-		root '/var/www/myproject_django/';
-	}
-	
-	location /media/ {
-		root '/var/www/myproject_django/';
-	}
-	
-	location / {
-		include proxy_params;
-		proxy_pass http://unix:/run/gunicorn.sock;
-	}
-}
-```
-
-### Создаем симлинк
-```
-sudo ln -s /etc/nginx/sites-available/myproject_django /etc/nginx/sites-enabled
-```
-
-### Перегрузите nginx
-```
-sudo systemctl restart nginx
-```
-```
-sudo service nginx restart
-```
-
-### проверим конфигурацию nginx
-```
-sudo nginx -t
-```
-
----
 
 
 ## #Django
+
 ### Ставим нужные пакеты
-* `sudo apt install gcc (python-dev) python3-pip python3-dev curl -y`
+* `sudo apt install gcc python3 python3-pip python3-dev curl -y`
 
 ```
 sudo apt install gcc 
-```
-```
-??? sudo apt install python-dev-is-python3
 ```
 ```
 sudo apt install python3
@@ -290,16 +243,16 @@ python3 --version
 ```
 
 
+
 ### Установка виртуальной среды Python
 ```
 sudo -H pip3 install --upgrade pip
 ```
 ```
-sudo pip install --upgrade pip
-```
-```
 sudo -H pip3 install virtualenv
 ```
+
+
 
 ### Создайте виртуальную среду в этой директории
 
@@ -311,17 +264,22 @@ sudo -H pip3 install virtualenv
         3. удалить папку venv 
 
 если папка venv не была добавлена в gitignore вполне возможно что она уже будет после клонирования репозитория
-```
-virtualenv venv
-```
-### устновим пакет
-```
-sudo apt install python3.10-venv
-```
-```
-python3 -m venv venv
-```
-* `python3 -m venv venv` - создание виртуальной среды Python с помощью модуля venv. virtualenv - Это инструмент, который позволяет создавать изолированные среды Python, где каждая среда может иметь свои собственные зависимости и пакеты. venv - Это встроенный модуль Python, начиная с версии 3.3, который также используется для создания виртуальных сред Python. Оба метода - использование python3 -m venv venv и virtualenv venv - позволяют создавать виртуальные среды Python, но различаются в том, как они это делают. Важно отметить, что использование venv является более современным подходом, так как это встроенный инструмент Python, в то время как virtualenv требует установки отдельного пакета.
+
+=== "Вариант 1"
+    ### Используем этот вариант
+    ```
+    virtualenv venv
+    ```
+
+=== "Вариант 2"
+    ### установим пакет
+    ```
+    sudo apt install python3.10-venv
+    ```
+    ```
+    python3 -m venv venv
+    ```
+    * `python3 -m venv venv` - создание виртуальной среды Python с помощью модуля venv. virtualenv - Это инструмент, который позволяет создавать изолированные среды Python, где каждая среда может иметь свои собственные зависимости и пакеты. venv - Это встроенный модуль Python, начиная с версии 3.3, который также используется для создания виртуальных сред Python. Оба метода - использование python3 -m venv venv и virtualenv venv - позволяют создавать виртуальные среды Python, но различаются в том, как они это делают. Важно отметить, что использование venv является более современным подходом, так как это встроенный инструмент Python, в то время как virtualenv требует установки отдельного пакета.
 
 
 
@@ -337,15 +295,22 @@ pip install -r requirements.txt
 
 ### Запуск сервера 
 (временная мера - просто для проверки). Ниже настроим gunicorn
-```
-python manage.py runserver 0.0.0.0:8000
-```
-```
-python3 manage.py runserver 0.0.0.0:8000
-```
+=== "Вариант 1"
+    ```
+    python manage.py runserver 0.0.0.0:8000
+    ```
+=== "Вариант 2"
+    ```
+    python3 manage.py runserver 0.0.0.0:8000
+    ```
 скорее всего сайт откроется с ошбикой, нужно внести тестовые доступы в settings.py в блок ALLOWED_HOSTS
 ![settingspy](assets/img/settings.png)
 ![hosts](assets/img/hosts.png)
+
+добавить ip сервера и домен
+```
+'89.111.172.7', 'app-exmpl.ru'
+```
 
 
 ### Создать папку static 
@@ -355,12 +320,14 @@ mkdir static
 
 
 ### Cобираем статические файлы
-```
-python manage.py collectstatic
-```
-```
-python3 manage.py collectstatic
-```
+=== "Вариант 1"
+    ```
+    python manage.py collectstatic
+    ```
+=== "Вариант 2"
+    ```
+    python3 manage.py collectstatic
+    ```
 
 ---
 
@@ -479,10 +446,85 @@ systemctl daemon-reload
 ---
 
 
-* `другое`
+## Настройка nginx.	Добавить файл в nginx каталог 
+myproject_django - придумайте свой вариант или использйте название папки вашего проекта
+```
+sudo nano /etc/nginx/sites-available/myproject_django
+```
+```
+sudo mcedit /etc/nginx/sites-available/myproject_django
+```
+
+
+### добавляем в файл /etc/nginx/sites-available/myproject_django эти данные (ставим свой домен в строку server_name)
+``` linenums="1"
+server {
+	
+	server_name app-exmpl.ru www.app-exmpl.ru;
+	
+	location /static/ {
+		root '/var/www/myproject_django/';
+	}
+	
+	location /media/ {
+		root '/var/www/myproject_django/';
+	}
+	
+	location / {
+		include proxy_params;
+		proxy_pass http://unix:/run/gunicorn.sock;
+	}
+}
+```
+
+### Перегрузите nginx
+```
+sudo systemctl restart nginx
+```
+```
+sudo service nginx restart
+```
+
+### проверим конфигурацию nginx
+```
+sudo nginx -t
+```
+```
+sudo service nginx status
+```
+
+---
+
+### изменить настройки нашего проекта django
+нужно внести  доступы в settings.py в блок ALLOWED_HOSTS
+![settingspy](assets/img/settings.png)
+![hostsnew](assets/img/hosts_new.png)
+
+добавить домен + домен с www
+
+### restart gunicorn
 ```
 sudo service gunicorn restart
 ```
+
+### Создаем симлинк nginx конфиг нашего проекта
+`myproject_django` - замените на название вашего проекта
+```
+sudo ln -s /etc/nginx/sites-available/myproject_django /etc/nginx/sites-enabled/
+```
+
+### Перегрузите nginx
+```
+sudo systemctl restart nginx
+```
+```
+sudo service nginx restart
+```
+
+---
+
+* `другое`
+
 
 ```
 sudo systemctl daemon-reload
@@ -538,7 +580,7 @@ sudo certbot
 
 ---
 
-
+## The end
 ---
 
 
