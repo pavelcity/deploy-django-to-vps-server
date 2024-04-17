@@ -1,0 +1,1967 @@
+
+<!doctype html>
+<html lang="ru" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
+    
+    
+      
+        <title>deploy django to vps server</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Перейти к содержанию
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Верхний колонтитул">
+    <a href="." title="deploy django to vps server" class="md-header__button md-logo" aria-label="deploy django to vps server" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            deploy django to vps server
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Поиск" placeholder="Поиск" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Поиск">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистить" aria-label="Очистить" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Инициализация поиска
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Навигация" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="deploy django to vps server" class="md-nav__button md-logo" aria-label="deploy django to vps server" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    deploy django to vps server
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-django-project-to-vps-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy Django project to vps server
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy Django project to vps server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      #Ресурсные записи -&gt; домен -&gt; сервер
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      ssh
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ssh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Сгенерировать ключ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вывести ключ в терминал
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Скопировать ключ на удаленный сервер
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Если соединение быстро обрывается можно использовать эту команду
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Зайти на сервер по ssh
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Обновите список пакетов
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Учетные записи
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Учетные записи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#root" class="md-nav__link">
+    <span class="md-ellipsis">
+      меняем пароль пользователя ROOT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      добавить учетную запись
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coder" class="md-nav__link">
+    <span class="md-ellipsis">
+      добавить права суперпользователя для пользователя coder
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      проверьте, что пользователь добавлен в группу sudo, выполните команду
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      #Установка программ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Установите git
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mceditor" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCeditor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Установите Nginx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Полезные команды Nginx
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Склонировать проект
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Склонировать проект">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#permission-denied" class="md-nav__link">
+    <span class="md-ellipsis">
+      проблема с клонированием / Permission denied
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coder-varwww" class="md-nav__link">
+    <span class="md-ellipsis">
+      Убедитесь, что пользователь coder имеет права на запись в директорию /var/www/
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django" class="md-nav__link">
+    <span class="md-ellipsis">
+      #Django
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="#Django">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ставим нужные пакеты
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      Установка виртуальной среды Python
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Создайте виртуальную среду в этой директории
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      Используем этот вариант
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      установим пакет
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      Активируйте виртуальную среду
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Установка модулей или пакетов вашего django приложения
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Запуск сервера
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static" class="md-nav__link">
+    <span class="md-ellipsis">
+      Создать папку static
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cобираем статические файлы
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gunicorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      #Настройка Gunicorn
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="#Настройка Gunicorn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#venv" class="md-nav__link">
+    <span class="md-ellipsis">
+      в виртуальном окружении выполнить команду (venv)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gunicorn_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Проверить установился ли gunicorn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gunicorn_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      создать файл сокета gunicorn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      Наполнить этими данными
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      создать файл для службы
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      Активировать сокет
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gunicorn_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Активируем службу gunicorn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Узнаем статус службы
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      Внеся изменения в файлы делаем перезагрузку
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Настройка nginx. Добавить файл в nginx каталог
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Настройка nginx. Добавить файл в nginx каталог">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etcnginxsites-availablemyproject_django-server_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      добавляем в файл /etc/nginx/sites-available/myproject_django эти данные (ставим свой домен в строку server_name)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Перегрузите nginx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      проверим конфигурацию nginx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      изменить настройки нашего проекта django
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restart-gunicorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      restart gunicorn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Создаем симлинк nginx конфиг нашего проекта
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Перегрузите nginx
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#letsencrypt-ssl" class="md-nav__link">
+    <span class="md-ellipsis">
+      #Letsencrypt - ssl
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="#Letsencrypt - ssl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssl-django" class="md-nav__link">
+    <span class="md-ellipsis">
+      на этом этапе выпуск сертификата ssl для проекта на django завершен
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      The end
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commands
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-django-project-to-vps-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy Django project to vps server
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy Django project to vps server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      #Ресурсные записи -&gt; домен -&gt; сервер
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      ssh
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ssh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Сгенерировать ключ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вывести ключ в терминал
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Скопировать ключ на удаленный сервер
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Если соединение быстро обрывается можно использовать эту команду
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Зайти на сервер по ssh
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Обновите список пакетов
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Учетные записи
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Учетные записи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#root" class="md-nav__link">
+    <span class="md-ellipsis">
+      меняем пароль пользователя ROOT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      добавить учетную запись
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coder" class="md-nav__link">
+    <span class="md-ellipsis">
+      добавить права суперпользователя для пользователя coder
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      проверьте, что пользователь добавлен в группу sudo, выполните команду
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      #Установка программ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Установите git
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mceditor" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCeditor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Установите Nginx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Полезные команды Nginx
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Склонировать проект
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Склонировать проект">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#permission-denied" class="md-nav__link">
+    <span class="md-ellipsis">
+      проблема с клонированием / Permission denied
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coder-varwww" class="md-nav__link">
+    <span class="md-ellipsis">
+      Убедитесь, что пользователь coder имеет права на запись в директорию /var/www/
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django" class="md-nav__link">
+    <span class="md-ellipsis">
+      #Django
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="#Django">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ставим нужные пакеты
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      Установка виртуальной среды Python
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Создайте виртуальную среду в этой директории
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      Используем этот вариант
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      установим пакет
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      Активируйте виртуальную среду
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Установка модулей или пакетов вашего django приложения
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Запуск сервера
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static" class="md-nav__link">
+    <span class="md-ellipsis">
+      Создать папку static
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cобираем статические файлы
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gunicorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      #Настройка Gunicorn
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="#Настройка Gunicorn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#venv" class="md-nav__link">
+    <span class="md-ellipsis">
+      в виртуальном окружении выполнить команду (venv)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gunicorn_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Проверить установился ли gunicorn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gunicorn_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      создать файл сокета gunicorn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      Наполнить этими данными
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      создать файл для службы
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      Активировать сокет
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gunicorn_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Активируем службу gunicorn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Узнаем статус службы
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      Внеся изменения в файлы делаем перезагрузку
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Настройка nginx. Добавить файл в nginx каталог
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Настройка nginx. Добавить файл в nginx каталог">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etcnginxsites-availablemyproject_django-server_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      добавляем в файл /etc/nginx/sites-available/myproject_django эти данные (ставим свой домен в строку server_name)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Перегрузите nginx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      проверим конфигурацию nginx
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      изменить настройки нашего проекта django
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restart-gunicorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      restart gunicorn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Создаем симлинк nginx конфиг нашего проекта
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Перегрузите nginx
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#letsencrypt-ssl" class="md-nav__link">
+    <span class="md-ellipsis">
+      #Letsencrypt - ssl
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="#Letsencrypt - ssl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssl-django" class="md-nav__link">
+    <span class="md-ellipsis">
+      на этом этапе выпуск сертификата ssl для проекта на django завершен
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      The end
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commands
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<p><a class="md-button" href="/">На главную</a></p>
+<h2 id="_1"></h2>
+<h1 id="deploy-django-project-to-vps-server">Deploy Django project to vps server</h1>
+<div class="admonition note">
+<p class="admonition-title">пояснения</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Шаги</label><label for="__tabbed_1_2">ssl</label><label for="__tabbed_1_3">Полезные видео</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ol>
+<li>Здесь рассматривается запуск проекта на vps сервере разработанного на django со стандартной базой данных sqlite3.</li>
+<li>Покупаем сервер и приступаем к его настройке</li>
+<li>Поработаем с ssh</li>
+<li>Настроим пользователя root</li>
+<li>Добавим нового пользователя. Переключимся на него и уже все настройки будем производить через него</li>
+<li>Установка и настройка Nginx</li>
+<li>Клонируем проект</li>
+<li>Установим gunicorn</li>
+<li>Установим пакеты для работы с django</li>
+</ol>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>Научимся подключать к нашему домену ssl сертификат</li>
+</ol>
+</div>
+<div class="tabbed-block">
+<ol>
+<li><a href="https://www.youtube.com/watch?v=Qvtr7es5dpc">Настройка сервера для Django 🔥 Git, Nginx, Gunicorn, PostgreSQL, домен, SSL-сертификат</a></li>
+<li><a href="https://www.youtube.com/watch?v=8OHe6chCWTE">Деплой Frontend приложения. Настройка nginx. Подключаем домен, настраиваем HTTPS, gzip, docker</a></li>
+<li><a href="https://sch9.ru/docs/nginx.html">Настройка веб-сервера Nginx</a></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<hr />
+<h2 id="-">#Ресурсные записи -&gt; домен -&gt; сервер</h2>
+<p>после покупки сервера мы связываем доменное имя с нашим сервером, данные по работе с сервером приходят на указанную вами почту или их можно взять в личном кабинете сервиса в котором покупался сервер
+<img alt="ip" src="assets/img/mainip.png" /></p>
+<ul>
+<li><code>настроить ресурсные записи в regru</code> - Позволит соединить доменное имя с купленным сервером</li>
+</ul>
+<p>заходим в регру, выбираем доменное имя, изменить ресурсные записи, добавляем ip нашего сервера: </p>
+<ul>
+<li><code>в запись @</code> </li>
+<li><code>и в www</code>
+<img alt="server" src="assets/img/resursdata.png" /></li>
+</ul>
+<hr />
+<h2 id="ssh">ssh</h2>
+<h3 id="_2">Сгенерировать ключ</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ssh-keygen -t rsa
+</code></pre></div>
+<h3 id="_3">Вывести ключ в терминал</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cat ~/.ssh/id_rsa.pub
+</code></pre></div>
+<h3 id="_4">Скопировать ключ на удаленный сервер</h3>
+<p>После ввода команды, введите пароль (не будет отображаться) и нажмите ENTER. Утилита скопирует содержимое открытого ключа (~/.ssh/id_rsa.pub) на удаленный сервер в файл authorized_keys.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ssh-copy-id root@00.000.000.000
+</code></pre></div></p>
+<h3 id="_5">Если соединение быстро обрывается можно использовать эту команду</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ssh -o ServerAliveInterval=60 root@00.000.000.000
+</code></pre></div>
+<h3 id="ssh_1">Зайти на сервер по ssh</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ssh root@00.000.000.000
+</code></pre></div>
+<hr />
+<h2 id="_6">Обновите список пакетов</h2>
+<div class="highlight"><pre><span></span><code>sudo apt update
+</code></pre></div>
+<hr />
+<h2 id="_7">Учетные записи</h2>
+<h3 id="root">меняем пароль пользователя ROOT</h3>
+<p>при вво­де сим­волы не отоб­ража­ются — нет ни букв, ни цифр, ни звез­дочек, это нор­маль­но, вве­ди новый пароль и наж­ми Enter
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>passwd
+</code></pre></div></p>
+<hr />
+<h3 id="_8">добавить учетную запись</h3>
+<p>следуйте инструкциям, чтобы установить пароль и заполнить другую информацию
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>adduser coder
+</code></pre></div></p>
+<h3 id="coder">добавить права суперпользователя для пользователя coder</h3>
+<p>добавьте пользователя coder в группу sudo, используя команду
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>usermod -aG sudo coder
+</code></pre></div></p>
+<h3 id="sudo">проверьте, что пользователь добавлен в группу sudo, выполните команду</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>groups coder
+</code></pre></div>
+<hr />
+<h3 id="_9">#Установка программ</h3>
+<h3 id="git">Установите git</h3>
+<ul>
+<li><code>git --version</code> - проверить установлен ли git
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git --version
+</code></pre></div></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo apt install git
+</code></pre></div>
+<h3 id="mceditor">MCeditor</h3>
+<p>Midnight Commander — один из файловых менеджеров с текстовым интерфейсом типа Norton Commander для UNIX-подобных операционных
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo apt install mc
+</code></pre></div></p>
+<h3 id="nginx">Установите Nginx</h3>
+<div class="highlight"><pre><span></span><code>sudo apt install nginx
+</code></pre></div>
+<h3 id="nginx_1">Полезные команды Nginx</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo nginx -t
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo systemctl start nginx
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo systemctl restart nginx
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo systemctl stop nginx
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo service nginx reload
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo service nginx status
+</code></pre></div>
+<hr />
+<h2 id="_10">Склонировать проект</h2>
+<p>перейти в папку www
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>cd /var/www/
+</code></pre></div>
+склонировать сюда проект
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>git clone gitLink
+</code></pre></div>
+например мой стартовый шаблон блога django с админкой
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>git clone https://github.com/pavelcity/lesson_django.git
+</code></pre></div></p>
+<h3 id="permission-denied">проблема с клонированием / Permission denied</h3>
+<ul>
+<li><code>Ошибка "Permission denied" при клонировании репозитория Git может возникнуть из-за недостаточных прав доступа к директории, в которую вы пытаетесь склонировать проект. В данном случае, вам не хватает прав на запись в директорию, где вы пытаетесь выполнить клонирование.</code></li>
+<li><code>Для решения этой проблемы вам следует убедиться, что у вас есть достаточные права доступа к директории /var/www/ или создать новую директорию, куда вы сможете клонировать проект. Вы можете выполнить следующие шаги:</code></li>
+</ul>
+<p>Убедитесь, что у вас есть права на запись в директорию /var/www/. Для этого выполните команду:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ls -ld /var/www/
+</code></pre></div></p>
+<p>Если у вас нет прав на запись в эту директорию, выполните команду для изменения прав доступа:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sudo chmod o+w /var/www/
+</code></pre></div></p>
+<h3 id="coder-varwww">Убедитесь, что пользователь coder имеет права на запись в директорию /var/www/</h3>
+<p>Вы можете изменить права доступа с помощью команды
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>sudo chown -R coder:coder /var/www/
+</code></pre></div></p>
+<hr />
+<h2 id="django">#Django</h2>
+<h3 id="_11">Ставим нужные пакеты</h3>
+<ul>
+<li><code>sudo apt install gcc python3 python3-pip python3-dev curl -y</code></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>sudo apt install gcc 
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>sudo apt install python3
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo apt install python3-pip
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>sudo apt install python3-dev
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>sudo apt install curl
+</code></pre></div></p>
+<p>Проверьте успешность установки с помощью 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>python3 --version
+</code></pre></div></p>
+<h3 id="python">Установка виртуальной среды Python</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>sudo -H pip3 install --upgrade pip
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>sudo -H pip3 install virtualenv
+</code></pre></div></p>
+<h3 id="_12">Создайте виртуальную среду в этой директории</h3>
+<div class="admonition важно">
+<p class="admonition-title">Важно</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">папка вашего проекта</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ol>
+<li>Убедиться что находимся в папке проекта, например по этому пути  /var/www/django_project</li>
+<li>Следующие действия необходимо выполнять в папке вашего проекта</li>
+<li>удалить папку venv </li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>если папка venv не была добавлена в gitignore вполне возможно что она уже будет после клонирования репозитория</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Вариант 1</label><label for="__tabbed_3_2">Вариант 2</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<h3 id="_13">Используем этот вариант</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>virtualenv venv
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<h3 id="_14">установим пакет</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>sudo apt install python3.10-venv
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>python3 -m venv venv
+</code></pre></div>
+* <code>python3 -m venv venv</code> - создание виртуальной среды Python с помощью модуля venv. virtualenv - Это инструмент, который позволяет создавать изолированные среды Python, где каждая среда может иметь свои собственные зависимости и пакеты. venv - Это встроенный модуль Python, начиная с версии 3.3, который также используется для создания виртуальных сред Python. Оба метода - использование python3 -m venv venv и virtualenv venv - позволяют создавать виртуальные среды Python, но различаются в том, как они это делают. Важно отметить, что использование venv является более современным подходом, так как это встроенный инструмент Python, в то время как virtualenv требует установки отдельного пакета.</p>
+</div>
+</div>
+</div>
+<h3 id="_15">Активируйте виртуальную среду</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>source venv/bin/activate
+</code></pre></div>
+<h3 id="django_1">Установка модулей или пакетов вашего django приложения</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>pip install -r requirements.txt
+</code></pre></div>
+<h3 id="_16">Запуск сервера</h3>
+<p>(временная мера - просто для проверки). Ниже настроим gunicorn</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Вариант 1</label><label for="__tabbed_4_2">Вариант 2</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>python manage.py runserver 0.0.0.0:8000
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>python3 manage.py runserver 0.0.0.0:8000
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>скорее всего сайт откроется с ошибкой, нужно внести тестовые доступы в settings.py в блок ALLOWED_HOSTS
+<img alt="settingspy" src="assets/img/settings.png" />
+<img alt="hosts" src="assets/img/hosts.png" /></p>
+<p>добавить ip сервера и домен
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>&#39;89.111.172.7&#39;, &#39;app-exmpl.ru&#39;
+</code></pre></div></p>
+<h3 id="static">Создать папку static</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>mkdir static
+</code></pre></div>
+<h3 id="c">Cобираем статические файлы</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Вариант 1</label><label for="__tabbed_5_2">Вариант 2</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>python manage.py collectstatic
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>python3 manage.py collectstatic
+</code></pre></div>
+</div>
+</div>
+</div>
+<hr />
+<h2 id="gunicorn">#Настройка Gunicorn</h2>
+<h3 id="venv">в виртуальном окружении выполнить команду (venv)</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>pip install gunicorn
+</code></pre></div>
+<img alt="terminal" src="assets/img/venv.jpg" /></p>
+<h3 id="gunicorn_1">Проверить установился ли gunicorn</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>gunicorn --version
+</code></pre></div>
+<h3 id="gunicorn_2">создать файл сокета gunicorn</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>sudo nano /etc/systemd/system/gunicorn.socket
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>sudo mcedit /etc/systemd/system/gunicorn.socket
+</code></pre></div></p>
+<h3 id="_17">Наполнить этими данными</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>[Unit]
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>Description=gunicorn socket
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>[Socket]
+<a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>ListenStream=/run/gunicorn.sock
+<a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>
+<a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>[Install]
+<a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>WantedBy=sockets.target
+</code></pre></div>
+<h3 id="_18">создать файл для службы</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>sudo nano /etc/systemd/system/gunicorn.service
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>sudo mcedit /etc/systemd/system/gunicorn.service
+</code></pre></div></p>
+<ul>
+<li><code>рабочий вариант</code> (myproject_django - замените на свою папку проекта)</li>
+</ul>
+<div class="admonition важно">
+<p class="admonition-title">Важно</p>
+<ol>
+<li>В блоке [Service] заменить в строках User и Group свои значения</li>
+<li>Поставить пользователя и группу от которого будет запускаться сервис</li>
+<li>В нашем случае</li>
+<li>User=coder</li>
+<li>Group=coder</li>
+<li>Как узнать текущего пользователя и его группы?</li>
+<li><code>whoami</code> - пользователь</li>
+<li>Другие команды:</li>
+<li><code>cat /etc/passwd</code>  - информация об учетных записях пользователей</li>
+<li><code>cat /etc/group</code> - группы</li>
+</ol>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>[Unit]
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>Description=gunicorn daemon
+<a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>Requires=gunicorn.socket
+<a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>After=network.target
+<a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>
+<a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>[Service]
+<a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a>User=coder
+<a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a>Group=coder
+<a id="__codelineno-50-9" name="__codelineno-50-9" href="#__codelineno-50-9"></a>WorkingDirectory=/var/www/myproject_django/
+<a id="__codelineno-50-10" name="__codelineno-50-10" href="#__codelineno-50-10"></a>ExecStart=/var/www/myproject_django/venv/bin/gunicorn \
+<a id="__codelineno-50-11" name="__codelineno-50-11" href="#__codelineno-50-11"></a>    --access-logfile - \
+<a id="__codelineno-50-12" name="__codelineno-50-12" href="#__codelineno-50-12"></a>    --workers 3 \
+<a id="__codelineno-50-13" name="__codelineno-50-13" href="#__codelineno-50-13"></a>    --bind unix:/run/gunicorn.sock \
+<a id="__codelineno-50-14" name="__codelineno-50-14" href="#__codelineno-50-14"></a>    base.wsgi:application
+<a id="__codelineno-50-15" name="__codelineno-50-15" href="#__codelineno-50-15"></a>
+<a id="__codelineno-50-16" name="__codelineno-50-16" href="#__codelineno-50-16"></a>[Install]
+<a id="__codelineno-50-17" name="__codelineno-50-17" href="#__codelineno-50-17"></a>WantedBy=multi-user.target
+</code></pre></div>
+<h3 id="_19">Активировать сокет</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>sudo systemctl start gunicorn.socket
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>sudo systemctl enable gunicorn.socket
+</code></pre></div></p>
+<h3 id="gunicorn_3">Активируем службу gunicorn</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>sudo service gunicorn start
+</code></pre></div>
+<h3 id="_20">Узнаем статус службы</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>sudo service gunicorn status
+</code></pre></div>
+<h3 id="_21">Внеся изменения в файлы делаем перезагрузку</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>systemctl daemon-reload
+</code></pre></div>
+<hr />
+<h2 id="nginx-nginx">Настройка nginx. Добавить файл в nginx каталог</h2>
+<p>myproject_django - придумайте свой вариант или используйте название папки вашего проекта
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>sudo nano /etc/nginx/sites-available/myproject_django
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>sudo mcedit /etc/nginx/sites-available/myproject_django
+</code></pre></div></p>
+<h3 id="etcnginxsites-availablemyproject_django-server_name">добавляем в файл /etc/nginx/sites-available/myproject_django эти данные (ставим свой домен в строку server_name)</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-58-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-58-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-58-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-58-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-58-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-58-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-58-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-58-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-58-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-58-10">10</a></span>
+<span class="normal"><a href="#__codelineno-58-11">11</a></span>
+<span class="normal"><a href="#__codelineno-58-12">12</a></span>
+<span class="normal"><a href="#__codelineno-58-13">13</a></span>
+<span class="normal"><a href="#__codelineno-58-14">14</a></span>
+<span class="normal"><a href="#__codelineno-58-15">15</a></span>
+<span class="normal"><a href="#__codelineno-58-16">16</a></span>
+<span class="normal"><a href="#__codelineno-58-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1"></a>server {
+<a id="__codelineno-58-2" name="__codelineno-58-2"></a>
+<a id="__codelineno-58-3" name="__codelineno-58-3"></a>    server_name app-exmpl.ru www.app-exmpl.ru;
+<a id="__codelineno-58-4" name="__codelineno-58-4"></a>
+<a id="__codelineno-58-5" name="__codelineno-58-5"></a>    location /static/ {
+<a id="__codelineno-58-6" name="__codelineno-58-6"></a>        root &#39;/var/www/myproject_django/&#39;;
+<a id="__codelineno-58-7" name="__codelineno-58-7"></a>    }
+<a id="__codelineno-58-8" name="__codelineno-58-8"></a>
+<a id="__codelineno-58-9" name="__codelineno-58-9"></a>    location /media/ {
+<a id="__codelineno-58-10" name="__codelineno-58-10"></a>        root &#39;/var/www/myproject_django/&#39;;
+<a id="__codelineno-58-11" name="__codelineno-58-11"></a>    }
+<a id="__codelineno-58-12" name="__codelineno-58-12"></a>
+<a id="__codelineno-58-13" name="__codelineno-58-13"></a>    location / {
+<a id="__codelineno-58-14" name="__codelineno-58-14"></a>        include proxy_params;
+<a id="__codelineno-58-15" name="__codelineno-58-15"></a>        proxy_pass http://unix:/run/gunicorn.sock;
+<a id="__codelineno-58-16" name="__codelineno-58-16"></a>    }
+<a id="__codelineno-58-17" name="__codelineno-58-17"></a>}
+</code></pre></div></td></tr></table></div>
+<h3 id="nginx_2">Перегрузите nginx</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>sudo systemctl restart nginx
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>sudo service nginx restart
+</code></pre></div></p>
+<h3 id="nginx_3">проверим конфигурацию nginx</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>sudo nginx -t
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>sudo service nginx status
+</code></pre></div></p>
+<hr />
+<h3 id="django_2">изменить настройки нашего проекта django</h3>
+<p>нужно внести  доступы в settings.py в блок ALLOWED_HOSTS
+<img alt="settingspy" src="assets/img/settings.png" />
+<img alt="hostsnew" src="assets/img/hosts_new.png" /></p>
+<p>добавить домен + домен с www</p>
+<h3 id="restart-gunicorn">restart gunicorn</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>sudo service gunicorn restart
+</code></pre></div>
+<h3 id="nginx_4">Создаем симлинк nginx конфиг нашего проекта</h3>
+<p><code>myproject_django</code> - замените на название вашего проекта
+<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>sudo ln -s /etc/nginx/sites-available/myproject_django /etc/nginx/sites-enabled/
+</code></pre></div></p>
+<h3 id="nginx_5">Перегрузите nginx</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>sudo systemctl restart nginx
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>sudo service nginx restart
+</code></pre></div></p>
+<hr />
+<ul>
+<li><code>другое</code></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>sudo systemctl daemon-reload
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>sudo systemctl restart gunicorn
+</code></pre></div></p>
+<p>другие полезные команды</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>sudo systemctl daemon-reload
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>sudo systemctl daemon-reload
+</code></pre></div>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>sudo systemctl status gunicorn
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>sudo systemctl restart nginx
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>sudo systemctl restart gunicorn
+</code></pre></div></p>
+<hr />
+<h2 id="letsencrypt-ssl">#Letsencrypt - ssl</h2>
+<p>Подключение сертификата ssl
+<div class="highlight"><pre><span></span><code><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>sudo apt install certbot python3-certbot-nginx
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>sudo certbot
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">выпуск ssl</p>
+<ol>
+<li>вводим свой емейл</li>
+<li><code>y</code> - соглашаемся с инструкцией</li>
+<li><code>выпустить ssl сертификат</code> - по настройке nginx будет предложено выпустить ssl для домена с www  и без www</li>
+<li><code>1 2</code> - вводим цифры через пробел</li>
+</ol>
+</div>
+<h3 id="ssl-django">на этом этапе выпуск сертификата ssl для проекта на django завершен</h3>
+<hr />
+<h2 id="the-end">The end</h2>
+<hr />
+<ul>
+<li><code>https://letsencrypt.org/ru/</code></li>
+<li>
+<p><code>https://certbot.eff.org/</code></p>
+</li>
+<li>
+<p><code>выбираем nginx и ubuntu20</code></p>
+</li>
+<li>
+<p><code>Install snapd</code></p>
+</li>
+<li><code>https://snapcraft.io/docs/installing-snapd</code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>sudo certbot --nginx
+</code></pre></div></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>snap --version
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>sudo apt-get remove certbot
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a>sudo apt install snapd
+</code></pre></div></p>
+<ul>
+<li>
+<p><code>Install Certbot</code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a>sudo snap install --classic certbot
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>sudo ln -s /snap/bin/certbot /usr/bin/certbot
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>sudo certbot --nginx
+</code></pre></div></p>
+</li>
+<li>
+<p><code>- вводим емейл</code></p>
+</li>
+<li><code>- y (соглашаемся)</code></li>
+<li><code>- вводим наш домен (example.com) - пишите свой домен</code></li>
+</ul>
+<hr />
+<h2 id="commands">Commands</h2>
+<ul>
+<li><code>python manage.py clear_cache</code> - Чтобы очистить кеш в Django, вы можете использовать команду управления clear_cache. Для этого выполните следующую команду в вашем терминале:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>python manage.py clear_cache
+</code></pre></div></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>sudo systemctl restart nginx
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>sudo systemctl restart gunicorn
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>python manage.py collectstatic
+</code></pre></div></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  К началу
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2024 settings-django-nginx
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy", "content.tooltips"], "search": "assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0415\u0449\u0451 1 \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.more.other": "\u0415\u0449\u0451 # \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.none": "\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0435", "search.result.other": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439: #", "search.result.placeholder": "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u043f\u0435\u0447\u0430\u0442\u0430\u0442\u044c \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430", "search.result.term.missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442", "select.version": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0435\u0440\u0441\u0438\u044e"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.3220b9d7.min.js"></script>
+      
+    
+  </body>
+</html>
